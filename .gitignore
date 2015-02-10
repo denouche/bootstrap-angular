@@ -1,0 +1,10 @@
+*~
+*.pyc
+node_modules/
+bower_components/
+src/index.html
+tmp/
+src/templates.js
+
+
+

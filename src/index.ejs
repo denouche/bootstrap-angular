@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Ch'feir Planning</title>
+    </head>
+
+    <body data-ng-app="chfeirPlanningApplication">
+        
+        <div id="content" class="container-fluid" data-ng-view></div>
+
+        <script type="text/javascript" src="<%= js.common.replace(/^src\//, '').replace(/^tmp\//, '../tmp/').replace(/^dist\//, '') %>"></script>
+
+<% js.app.forEach(function(jsFile){ %>
+        <script type="text/javascript" src="<%= jsFile.replace(/^src\//, '').replace(/^tmp\//, '../tmp/').replace(/^dist\//, '') %>"></script>
+<% }) %>
+    </body>
+</html>
+
+
