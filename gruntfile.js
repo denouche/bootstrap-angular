@@ -103,7 +103,7 @@ module.exports = function (grunt) {
                 base: 'tmp'
             },
             app: {
-                src: ['tmp/**/*.html'],
+                src: ['tmp/app/*.html'],
                 dest: 'tmp/templates.js'
             }
         },
