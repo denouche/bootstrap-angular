@@ -228,7 +228,7 @@ module.exports = function (grunt) {
         grunt.task.run(['build', 'concurrent:target']);
     });
     
-    grunt.registerTask('default', 'server');
+    grunt.registerTask('default', 'serve');
 
 };
 
