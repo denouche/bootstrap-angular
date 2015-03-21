@@ -1,4 +1,4 @@
-angular.module('chfeirPlanningApplication', ['ngRoute', 'chfeirPlanningDirectives', 'chfeirPlanningServices', 'chfeirPlanningControllers', 'templates-app'])
+angular.module('myProjectApplication', ['ngRoute', 'myProjectDirectives', 'myProjectServices', 'myProjectControllers', 'templates-app'])
 .config(function($routeProvider) {
     'use strict';
 

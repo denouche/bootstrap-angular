@@ -3,11 +3,11 @@ module.exports = {
     src: {
         js: [
             'src/app/services.js',
-            'src/app/components/**/*-service.js',
+            'src/app/**/*-service.js',
             'src/app/directives.js',
-            'src/app/components/**/*-directive.js',
+            'src/app/**/*-directive.js',
             'src/app/controllers.js',
-            'src/app/components/**/*-controller.js',
+            'src/app/**/*-controller.js',
             'src/app/app.js',
         ],
         css: [
@@ -23,6 +23,9 @@ module.exports = {
             'bower_components/lodash/dist/lodash.min.js'
         ],
         css: [
+            'bower_components/bootstrap/dist/css/bootstrap.min.css'
+        ],
+        assets: [
         ]
     }
 };

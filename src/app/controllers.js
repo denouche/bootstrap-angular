@@ -1,2 +1,2 @@
-angular.module('chfeirPlanningControllers', []);
+angular.module('myProjectControllers', []);
 

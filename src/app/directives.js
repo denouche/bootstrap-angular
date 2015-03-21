@@ -1,2 +1,2 @@
-angular.module('chfeirPlanningDirectives', []);
+angular.module('myProjectDirectives', []);
 

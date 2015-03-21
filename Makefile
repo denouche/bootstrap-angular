@@ -17,6 +17,9 @@ bowerInstall:
 npmInstall:
 	npm install
 
+npmInstallProduction:
+	npm install --production
+
 install: npmInstall bowerInstall
 
 dev:

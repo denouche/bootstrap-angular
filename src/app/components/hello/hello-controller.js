@@ -1,4 +1,4 @@
-angular.module('chfeirPlanningControllers')
+angular.module('myProjectControllers')
 .controller('HelloController', function () {
     'use strict';
 

@@ -4,16 +4,23 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Ch'feir Planning</title>
+
+<% css.common.forEach(function(cssFile){ %>
+        <link rel="stylesheet" href="<%= cssFile %>" type="text/css"></link>
+<% }) %>
+<% css.app.forEach(function(cssFile){ %>
+        <link rel="stylesheet" href="<%= cssFile %>" type="text/css"></link>
+<% }) %>
     </head>
 
-    <body data-ng-app="chfeirPlanningApplication">
+    <body data-ng-app="myProjectApplication">
         
         <div id="content" class="container-fluid" data-ng-view></div>
 
-        <script type="text/javascript" src="<%= js.common.replace(/^src\//, '').replace(/^tmp\//, '../tmp/').replace(/^dist\//, '') %>"></script>
+        <script type="text/javascript" src="<%= js.common %>"></script>
 
 <% js.app.forEach(function(jsFile){ %>
-        <script type="text/javascript" src="<%= jsFile.replace(/^src\//, '').replace(/^tmp\//, '../tmp/').replace(/^dist\//, '') %>"></script>
+        <script type="text/javascript" src="<%= jsFile %>"></script>
 <% }) %>
     </body>
 </html>

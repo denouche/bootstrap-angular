@@ -1,2 +1,2 @@
-angular.module('chfeirPlanningServices', []);
+angular.module('myProjectServices', []);
 

@@ -4,34 +4,61 @@ module.exports = function (grunt) {
     require('load-grunt-tasks')(grunt);
     
     var mode = grunt.option('mode') || 'dev';
-    var destination = (mode === 'prod') ? 'dist' : 'src';
 
     var assets = require('./build.config');
+
+    function sanitizeDistFilename (filename) {
+        return filename.replace(/^dist\//, '').replace(/^bower_components\//, 'assets/libs/');
+    }
+
+    function sanitizeDevFilename (filename) {
+        return filename.replace(/^src\//, '').replace(/^tmp\//, '../tmp/').replace(/^bower_components\//, '../bower_components/');
+    }
     
     var getTemplateVariables = function () {
         return function () {
-            var vars = null;
+            var vars = null,
+                cssCommon = [],
+                cssApp = [],
+                jsCommon = grunt.config('concat.common.dest'),
+                jsApp = [];
+
             if(mode === 'prod') {
+                assets.common.css.forEach(function(e) {
+                    cssCommon.push(sanitizeDistFilename(e));
+                });
+
                 vars = {
                     js: {
-                        common: grunt.config('uglify.common.dest'),
-                        app: [grunt.config('uglify.app.dest')]
+                        common: sanitizeDistFilename(jsCommon),
+                        app: [sanitizeDistFilename(grunt.config('uglify.dist.dest'))]
                     },
                     css: {
-                        app: ['dist/assets/css/main.min.css'],
-                        common: assets.common.css
+                        app: ['assets/css/main.min.css'],
+                        common: cssCommon
                     }
                 };
             }
             else {
+                assets.common.css.forEach(function(e) {
+                    cssCommon.push(sanitizeDevFilename(e));
+                });
+                grunt.file.expand(assets.src.css).forEach(function(e) {
+                    cssApp.push(sanitizeDevFilename(e));
+                });
+
+                grunt.file.expand(assets.src.js.concat(['tmp/templates.js'])).forEach(function(e) {
+                    jsApp.push(sanitizeDevFilename(e));
+                });
+
                 vars = {
                     js: {
-                        common: grunt.config('concat.common.dest'),
-                        app: grunt.file.expand(assets.src.js.concat(['tmp/templates.js']))
+                        common: sanitizeDevFilename(jsCommon),
+                        app: jsApp
                     },
                     css: {
-                        app: grunt.file.expand(assets.src.css),
-                        common: assets.common.css
+                        app: cssApp,
+                        common: cssCommon
                     }
                 };
             }
@@ -56,7 +83,7 @@ module.exports = function (grunt) {
         concat : {
             common: {
                 src: assets.common.js,
-                dest: 'tmp/js/common.js'
+                dest: ((mode === 'prod') ? 'dist' : 'tmp') + '/js/common.js'
             },
             app: {
                 src: assets.src.js.concat(['<%= html2js.app.dest %>']),
@@ -86,8 +113,24 @@ module.exports = function (grunt) {
             },
             prod: {
                 files: [
-                    {expand: true, cwd: 'src/app/', src: '**/*.html', dest: 'tmp/app/'},
-                    {expand: true, cwd: 'src/assets/', src: '**/*', dest: 'dist/assets/'}
+                    {expand: true, cwd: 'src/app/', src: ['**/*.html'], dest: 'tmp/app/'},
+                    {expand: true, cwd: 'src/assets/', src: ['**/*.html'], dest: 'dist/assets/'},
+                    {
+                        expand: true,
+                        src: [assets.common.css],
+                        dest: 'dist/assets/libs/',
+                        rename: function(dest, src) {
+                            return dest + src.replace(/^bower_components\//, '');
+                        }
+                    },
+                    {
+                        expand: true,
+                        src: [assets.common.assets],
+                        dest: 'dist/assets/libs/',
+                        rename: function(dest, src) {
+                            return dest + src.replace(/^bower_components\//, '');
+                        }
+                    }
                 ]
             }
         },
@@ -103,7 +146,7 @@ module.exports = function (grunt) {
                 base: 'tmp'
             },
             app: {
-                src: ['tmp/app/*.html'],
+                src: ['tmp/app/**/*.html'],
                 dest: 'tmp/templates.js'
             }
         },
@@ -151,16 +194,12 @@ module.exports = function (grunt) {
         template: {
             index: {
                 src: 'src/index.ejs',
-                dest: destination + '/index.html',
+                dest: ((mode === 'prod') ? 'dist' : 'src') + '/index.html',
                 variables: getTemplateVariables()
             }
         },
         uglify: {
-            common: {
-                src: [ '<%= concat.common.dest %>' ],
-                dest: 'dist/js/common.min.js'
-            },
-            app: {
+            dist: {
                 src: [ '<%= concat.app.dest %>'],
                 dest: 'dist/js/App.min.js'
             }
