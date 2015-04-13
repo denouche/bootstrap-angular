@@ -1,4 +1,4 @@
-angular.module('myProjectControllers')
+angular.module('hello')
 .controller('HelloController', function () {
     'use strict';
 

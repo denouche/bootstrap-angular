@@ -2,11 +2,9 @@
 module.exports = {
     src: {
         js: [
-            'src/app/services.js',
+            'src/app/**/*-module.js',
             'src/app/**/*-service.js',
-            'src/app/directives.js',
             'src/app/**/*-directive.js',
-            'src/app/controllers.js',
             'src/app/**/*-controller.js',
             'src/app/app.js',
         ],
