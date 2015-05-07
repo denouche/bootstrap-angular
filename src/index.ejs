@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 
-<html lang="fr">
+<html lang="fr" data-ng-app="myProjectApplication">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Ch'feir Planning</title>
+        <title data-translate="main.page_title"></title>
 
 <% css.common.forEach(function(cssFile){ %>
         <link rel="stylesheet" href="<%= cssFile %>" type="text/css"></link>
@@ -13,7 +13,7 @@
 <% }) %>
     </head>
 
-    <body data-ng-app="myProjectApplication">
+    <body>
         
         <div id="content" class="container-fluid" data-ng-view></div>
 
