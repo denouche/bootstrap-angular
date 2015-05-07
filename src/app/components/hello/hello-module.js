@@ -4,7 +4,13 @@ angular.module('hello', [])
 
     $routeProvider.when('/hello', {
         templateUrl: 'app/components/hello/hello-view.html',
-        controller : 'HelloController'
+        controller : 'HelloController',
+        resolve: {
+            translations: function ($translatePartialLoader, $translate) {
+                $translatePartialLoader.addPart('hello');
+                return $translate.refresh();
+            }
+        }
     });
 
 });

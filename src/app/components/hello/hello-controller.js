@@ -3,4 +3,5 @@ angular.module('hello')
     'use strict';
 
     console.log('Hello controller');
+
 });

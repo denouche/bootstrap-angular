@@ -52,3 +52,12 @@ rm -rf dist/                                           // do not keep generated 
 git commit -am'clean dist folder after release'
 git push origin master
 ```
+
+# Changelog
+## How to
+
+When releasing, the commit are parsed, using angular conventions: https://github.com/ajoslin/conventional-changelog/blob/master/CONVENTIONS.md
+
+The CHANGELOG.md file is filled in with the functionnal changelog based on the commits messages.
+
+So it's important to follow the conventions that are described in the above link.

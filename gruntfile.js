@@ -14,6 +14,10 @@ module.exports = function (grunt) {
     function sanitizeDevFilename (filename) {
         return filename.replace(/^src\//, '').replace(/^tmp\//, '../tmp/').replace(/^bower_components\//, '../bower_components/');
     }
+
+    function isProductionMode (mode) {
+        return mode === 'prod';
+    }
     
     var getTemplateVariables = function () {
         return function () {
@@ -23,7 +27,7 @@ module.exports = function (grunt) {
                 jsCommon = grunt.config('concat.common.dest'),
                 jsApp = [];
 
-            if(mode === 'prod') {
+            if(isProductionMode(mode)) {
                 assets.common.css.forEach(function(e) {
                     cssCommon.push(sanitizeDistFilename(e));
                 });
@@ -47,7 +51,12 @@ module.exports = function (grunt) {
                     cssApp.push(sanitizeDevFilename(e));
                 });
 
-                grunt.file.expand(assets.src.js.concat(['tmp/templates.js'])).forEach(function(e) {
+                grunt.file.expand(
+                    assets.src.js
+                    .concat([
+                        grunt.config.process('<%= html2js.app.dest %>'),
+                    ]))
+                .forEach(function(e) {
                     jsApp.push(sanitizeDevFilename(e));
                 });
 
@@ -72,7 +81,8 @@ module.exports = function (grunt) {
             options : {
                 files: ['package.json', 'bower.json'],
                 pushTo : 'origin master',
-                commitFiles: ['package.json', 'bower.json', 'dist']
+                commitFiles: ['package.json', 'bower.json', 'dist', 'CHANGELOG.md'],
+                commitMessage: 'chore: release v%VERSION%',
             }
         },
         clean : {
@@ -83,7 +93,7 @@ module.exports = function (grunt) {
         concat : {
             common: {
                 src: assets.common.js,
-                dest: ((mode === 'prod') ? 'dist' : 'tmp') + '/js/common.js'
+                dest: (isProductionMode(mode) ? 'dist' : 'tmp') + '/js/common.js'
             },
             app: {
                 src: assets.src.js.concat(['<%= html2js.app.dest %>']),
@@ -109,6 +119,14 @@ module.exports = function (grunt) {
         copy: {
             common: {
                 files: [
+                    { // usefull for example to put angular-locale_xx-xx.js, or bootstrap fonts
+                        expand: true,
+                        src: [assets.common.assets],
+                        dest: (isProductionMode(mode) ? 'dist' : 'src') + '/assets/libs/',
+                        rename: function(dest, src) {
+                            return dest + src.replace(/^bower_components\//, '');
+                        }
+                    }
                 ]
             },
             prod: {
@@ -123,14 +141,8 @@ module.exports = function (grunt) {
                             return dest + src.replace(/^bower_components\//, '');
                         }
                     },
-                    {
-                        expand: true,
-                        src: [assets.common.assets],
-                        dest: 'dist/assets/libs/',
-                        rename: function(dest, src) {
-                            return dest + src.replace(/^bower_components\//, '');
-                        }
-                    }
+                    {expand: true, cwd: 'src/assets/images/', src: ['**/*'], dest: 'dist/assets/images/'},
+                    {expand: true, cwd: 'src/assets/i18n/', src: ['**/*'], dest: 'dist/assets/i18n/'}
                 ]
             }
         },
@@ -194,7 +206,7 @@ module.exports = function (grunt) {
         template: {
             index: {
                 src: 'src/index.ejs',
-                dest: ((mode === 'prod') ? 'dist' : 'src') + '/index.html',
+                dest: (isProductionMode(mode) ? 'dist' : 'src') + '/index.html',
                 variables: getTemplateVariables()
             }
         },

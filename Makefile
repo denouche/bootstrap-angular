@@ -26,9 +26,11 @@ dev:
 	grunt
 
 bumpAndBuildProd:
+	if [ "$(type)" = "" ]; then grunt bump-only:patch; else grunt bump-only:$(type); fi
 	grunt build --mode=prod
 	git add .
-	if [ "$(type)" = "" ]; then grunt bump:patch; else grunt bump:$(type); fi
+	grunt changelog
+	grunt bump-commit
 
 release: clean install bumpAndBuildProd
 	rm -rf $(DIST_FOLDER)/
