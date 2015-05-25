@@ -34,6 +34,6 @@ bumpAndBuildProd:
 
 release: clean install bumpAndBuildProd
 	rm -rf $(DIST_FOLDER)/
-	git commit -am'clean $(DIST_FOLDER) folder after release'
+	git commit -am'chore: clean $(DIST_FOLDER) folder after release'
 	git push origin master
 
