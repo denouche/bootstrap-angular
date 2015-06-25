@@ -153,6 +153,11 @@ module.exports = function (grunt) {
                 }
             }
         },
+        filerev: {
+            dist: {
+                src: ['dist/js/{,*/}*.js', 'dist/assets/css/{,*/}*.css']
+            }
+        },
         html2js: {
             options: {
                 base: 'tmp'
@@ -194,13 +199,6 @@ module.exports = function (grunt) {
                         src: [ '<%= concat.app.dest %>' ]
                     }
                 ]
-            }
-        },
-        rev: {
-            dist: {
-                files: {
-                    src: ['dist/js/{,*/}*.js', 'dist/assets/css/{,*/}*.css']
-                }
             }
         },
         template: {
@@ -250,7 +248,7 @@ module.exports = function (grunt) {
         'concat',
         'ngAnnotate',
         'uglify',
-        'rev',
+        'filerev',
         'usemin',
         'htmlmin:index'
     ]);
