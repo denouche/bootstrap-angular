@@ -27,6 +27,7 @@ module.exports = {
             'bower_components/bootstrap/dist/css/bootstrap.min.css'
         ],
         assets: [
+            'bower_components/bootstrap/dist/fonts/glyphicons-*'
         ]
     }
 };
