@@ -116,6 +116,16 @@ module.exports = function (grunt) {
                 }
             }
         },
+        conventionalChangelog: {
+            options: {
+                changelogOpts: {
+                    preset: 'angular'
+                }
+            },
+            release: {
+                src: 'CHANGELOG.md'
+            }
+        },
         copy: {
             common: {
                 files: [
