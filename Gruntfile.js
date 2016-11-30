@@ -93,14 +93,6 @@ module.exports = function (grunt) {
 
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
-        bump : {
-            options : {
-                files: ['package.json'],
-                pushTo : 'origin',
-                commitFiles: ['-a'],
-                commitMessage: 'chore(release): release v%VERSION%',
-            }
-        },
         clean : {
             files : [
                 'src/index.html', 'tmp/', 'dist/'
@@ -134,16 +126,6 @@ module.exports = function (grunt) {
                     keepalive: true,
                     port: 9000
                 }
-            }
-        },
-        conventionalChangelog: {
-            options: {
-                changelogOpts: {
-                    preset: 'angular'
-                }
-            },
-            release: {
-                src: 'CHANGELOG.md'
             }
         },
         copy: {

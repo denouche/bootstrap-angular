@@ -22,19 +22,11 @@ install: npmInstall
 dev:
 	grunt
 
-bumpAndBuildProd:
-	if [ "$(type)" = "" ]; then grunt bump-only:patch; else grunt bump-only:$(type); fi
-	grunt build --mode=prod
-	grunt conventionalChangelog
-
-commitAndClean:
-	git add .
-	grunt bump-commit
+release: clean install bumpAndBuildProd cleanAfterRelease
+	npm release
 	rm -rf $(DIST_FOLDER)/
-	git commit -am'chore: clean $(DIST_FOLDER) folder after release'
-	git push origin HEAD
-
-release: clean install bumpAndBuildProd commitAndClean
+	#git commit -am'chore: clean $(DIST_FOLDER) folder after release'
+	#git push --follow-tags origin HEAD
 
 watch:
 	grunt buildAndWatch
