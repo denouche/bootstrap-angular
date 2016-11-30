@@ -23,9 +23,11 @@ install: npmInstall
 dev:
 	grunt
 
-release: clean install
+buildProdAndChangelogAndTag:
 	grunt build --mode=prod
 	npm run release
+
+release: clean install buildProdAndChangelogAndTag
 	$(eval VERSION := $(shell cat package.json | grep -Po '"version"\s*:\s*"\K([^"]+)'))
 	docker build -t $(PROJECT_NAME):$(VERSION) .
 	rm -rf $(DIST_FOLDER)/
