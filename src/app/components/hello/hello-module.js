@@ -1,4 +1,6 @@
-angular.module('hello', [])
+angular.module('hello', [
+    'demo-module'
+])
 .config(function($routeProvider) {
     'use strict';
 

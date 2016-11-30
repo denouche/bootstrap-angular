@@ -12,18 +12,12 @@ help:
 
 clean:
 	grunt clean || true
-	rm -rf bower_components/ node_modules/ $(DIST_FOLDER)/
-
-bowerInstall:
-	./node_modules/bower/bin/bower install
+	rm -rf node_modules/ $(DIST_FOLDER)/
 
 npmInstall:
 	npm install
 
-npmInstallProduction:
-	npm install --production
-
-install: npmInstall bowerInstall
+install: npmInstall
 
 dev:
 	grunt
@@ -32,13 +26,15 @@ bumpAndBuildProd:
 	if [ "$(type)" = "" ]; then grunt bump-only:patch; else grunt bump-only:$(type); fi
 	grunt build --mode=prod
 	grunt conventionalChangelog
+
+commitAndClean:
 	git add .
 	grunt bump-commit
-
-release: clean install bumpAndBuildProd
 	rm -rf $(DIST_FOLDER)/
 	git commit -am'chore: clean $(DIST_FOLDER) folder after release'
-	git push origin master
+	git push origin HEAD
+
+release: clean install bumpAndBuildProd commitAndClean
 
 watch:
 	grunt buildAndWatch

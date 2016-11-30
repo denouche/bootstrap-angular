@@ -6,10 +6,10 @@
         <title data-translate="main.page_title"></title>
 
 <% css.common.forEach(function(cssFile){ %>
-        <link rel="stylesheet" href="<%= cssFile %>" type="text/css"></link>
+        <link rel="stylesheet" href="<%= cssFile %>" type="text/css"/>
 <% }) %>
 <% css.app.forEach(function(cssFile){ %>
-        <link rel="stylesheet" href="<%= cssFile %>" type="text/css"></link>
+        <link rel="stylesheet" href="<%= cssFile %>" type="text/css"/>
 <% }) %>
     </head>
 
@@ -18,6 +18,10 @@
         <div id="content" class="container-fluid" data-ng-view></div>
 
         <script type="text/javascript" src="<%= js.common %>"></script>
+
+<% config.forEach(function(configFile){ %>
+        <script type="text/javascript" src="<%= configFile %>"></script>
+<% }) %>
 
 <% js.app.forEach(function(jsFile){ %>
         <script type="text/javascript" src="<%= jsFile %>"></script>

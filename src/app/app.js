@@ -1,8 +1,10 @@
 angular.module('myProjectApplication', [
     'config',
-    'ngRoute',
-    'templates-app',
     'pascalprecht.translate',
+    'tmh.dynamicLocale',
+    'ngRoute',
+    'ngSanitize',
+    'templates-app',
     'hello'
 ])
 .config(function($routeProvider) {
@@ -23,4 +25,19 @@ angular.module('myProjectApplication', [
     $translateProvider
         .preferredLanguage(Configuration.defaultlanguage)
         .fallbackLanguage('fr-fr');
+    
+    $translateProvider.useSanitizeValueStrategy('escape');
+})
+.config(function(tmhDynamicLocaleProvider, Configuration) {
+     'use strict';
+     tmhDynamicLocaleProvider.defaultLocale(Configuration.defaultlanguage);
+     tmhDynamicLocaleProvider.localeLocationPattern('assets/libs/angular-i18n/angular-locale_{{locale}}.js');
+})
+.run(function ($rootScope, $translate) {
+    'use strict';
+
+    $rootScope.$on('$translatePartialLoaderStructureChanged', function () {
+        $translate.refresh();
+    });
+
 });

@@ -2,32 +2,38 @@ module.exports = function (grunt) {
     "use strict";
 
     require('load-grunt-tasks')(grunt);
-    
+
+    // For local development purpose only
+    var devProfileName = 'dev';
+    // Regular production profile
+    var prodProfileName = 'prod';
+
+    var isProductionMode = function(mode) {
+        return mode === prodProfileName;
+    };
+
     var mode = grunt.option('mode') || 'dev';
 
     var assets = require('./build.config');
 
     function sanitizeDistFilename (filename) {
-        return filename.replace(/^dist\//, '').replace(/^bower_components\//, 'assets/libs/');
+        return filename.replace(/^dist\//, '').replace(/^node_modules\//, 'assets/libs/');
     }
 
     function sanitizeDevFilename (filename) {
-        return filename.replace(/^src\//, '').replace(/^tmp\//, '../tmp/').replace(/^bower_components\//, '../bower_components/');
+        return filename.replace(/^src\//, '').replace(/^tmp\//, '../tmp/').replace(/^node_modules\//, '../node_modules/');
     }
 
-    function isProductionMode (mode) {
-        return mode === 'prod';
-    }
-    
     var getTemplateVariables = function () {
         return function () {
             var vars = null,
                 cssCommon = [],
                 cssApp = [],
                 jsCommon = grunt.config('concat.common.dest'),
-                jsApp = [];
+                jsApp = [],
+                config = [];
 
-            if(isProductionMode(mode)) {
+            if (isProductionMode(mode)) {
                 assets.common.css.forEach(function(e) {
                     cssCommon.push(sanitizeDistFilename(e));
                 });
@@ -40,7 +46,8 @@ module.exports = function (grunt) {
                     css: {
                         app: ['assets/css/main.min.css'],
                         common: cssCommon
-                    }
+                    },
+                    config: config
                 };
             }
             else {
@@ -55,9 +62,16 @@ module.exports = function (grunt) {
                     assets.src.js
                     .concat([
                         grunt.config.process('<%= html2js.app.dest %>'),
-                    ]))
+                        grunt.config.process('<%= ngconstant.version.options.dest %>')
+                    ])
+                )
                 .forEach(function(e) {
                     jsApp.push(sanitizeDevFilename(e));
+                });
+
+                grunt.file.expand(assets.src.config)
+                .forEach(function(e) {
+                    config.push(sanitizeDevFilename(e));
                 });
 
                 vars = {
@@ -68,7 +82,8 @@ module.exports = function (grunt) {
                     css: {
                         app: cssApp,
                         common: cssCommon
-                    }
+                    },
+                    config: config
                 };
             }
             return vars;
@@ -77,12 +92,13 @@ module.exports = function (grunt) {
 
 
     grunt.initConfig({
+        pkg: grunt.file.readJSON('package.json'),
         bump : {
             options : {
-                files: ['package.json', 'bower.json'],
+                files: ['package.json'],
                 pushTo : 'origin',
-                commitFiles: ['package.json', 'bower.json', 'dist', 'CHANGELOG.md'],
-                commitMessage: 'chore: release v%VERSION%',
+                commitFiles: ['-a'],
+                commitMessage: 'chore(release): release v%VERSION%',
             }
         },
         clean : {
@@ -96,7 +112,11 @@ module.exports = function (grunt) {
                 dest: (isProductionMode(mode) ? 'dist' : 'tmp') + '/js/common.js'
             },
             app: {
-                src: assets.src.js.concat(['<%= html2js.app.dest %>']),
+                src: assets.src.js.concat([
+                    '<%= html2js.app.dest %>',
+                    '<%= ngconstant.version.options.dest %>',
+                    assets.src.config
+                ]),
                 dest: 'tmp/js/App.js'
             }
         },
@@ -129,12 +149,12 @@ module.exports = function (grunt) {
         copy: {
             common: {
                 files: [
-                    { // usefull for example to put angular-locale_xx-xx.js, or bootstrap fonts
+                    {
                         expand: true,
                         src: [assets.common.assets],
                         dest: (isProductionMode(mode) ? 'dist' : 'src') + '/assets/libs/',
                         rename: function(dest, src) {
-                            return dest + src.replace(/^bower_components\//, '');
+                            return dest + src.replace(/^node_modules\//, '');
                         }
                     }
                 ]
@@ -148,11 +168,12 @@ module.exports = function (grunt) {
                         src: [assets.common.css],
                         dest: 'dist/assets/libs/',
                         rename: function(dest, src) {
-                            return dest + src.replace(/^bower_components\//, '');
+                            return dest + src.replace(/^node_modules\//, '');
                         }
                     },
                     {expand: true, cwd: 'src/assets/images/', src: ['**/*'], dest: 'dist/assets/images/'},
-                    {expand: true, cwd: 'src/assets/i18n/', src: ['**/*'], dest: 'dist/assets/i18n/'}
+                    {expand: true, cwd: 'src/assets/i18n/', src: ['**/*'], dest: 'dist/assets/i18n/'},
+                    {expand: true, cwd: 'src/assets/fonts/', src: ['**/*'], dest: 'dist/assets/fonts/'}
                 ]
             }
         },
@@ -165,7 +186,9 @@ module.exports = function (grunt) {
         },
         filerev: {
             dist: {
-                src: ['dist/js/{,*/}*.js', 'dist/assets/css/{,*/}*.css']
+                files: {
+                    src: ['dist/js/{,*/}*.js', 'dist/assets/css/{,*/}*.css']
+                }
             }
         },
         html2js: {
@@ -174,7 +197,38 @@ module.exports = function (grunt) {
             },
             app: {
                 src: ['tmp/app/**/*.html'],
-                dest: 'tmp/templates.js'
+                dest: 'tmp/js/templates.js'
+            }
+        },
+        htmlangular: {
+            options: {
+                reportpath: null,
+                reportCheckstylePath: null,
+                customtags: [
+                    'loyalty-header',
+                    'loyalty-nav-bar',
+                    'loyalty-nav-bar-item',
+                    'uib-tabset',
+                    'isteven-multi-select',
+                    'field-validation',
+                    'maintenance-handler',
+                    'translate-default',
+                    'wait-frame'
+                ],
+                relaxerror: [
+                    'Start tag seen without seeing a doctype first. Expected e.g. “<!DOCTYPE html>”.',
+                    'Element “head” is missing a required instance of child element “title”.',
+                    'Element “title” must not be empty.',
+                    'Empty heading.',
+                    'This document appears to be written in English. Consider adding “lang="en"” (or variant) to the “html” start tag.',
+                    'Consider adding a “lang” attribute to the “html” start tag to declare the language of this document.'
+                ]
+            },
+            files: {
+                src: [
+                    'src/**/*.html',
+                    '<%= template.index.dest %>'
+                ]
             }
         },
         htmlmin: {
@@ -195,6 +249,7 @@ module.exports = function (grunt) {
         },
         jshint: {
             all: assets.src.js,
+            config: assets.src.config,
             options : {
                 jshintrc: '.jshintrc'
             }
@@ -204,11 +259,20 @@ module.exports = function (grunt) {
                 singleQuotes: true
             },
             dist: {
-                files: [
-                    {
-                        src: [ '<%= concat.app.dest %>' ]
-                    }
-                ]
+                files: {
+                    '<%= concat.app.dest %>': ['<%= concat.app.dest %>']
+                }
+            }
+        },
+        ngconstant: {
+            version: {
+                options: {
+                    dest: 'tmp/js/version.js',
+                    name: 'configVersion'
+                },
+                constants: {
+                    VERSION: '<%= pkg.version %>'
+                }
             }
         },
         template: {
@@ -234,7 +298,15 @@ module.exports = function (grunt) {
             },
             template: {
                 files : ['<%= template.index.src %>'],
-                tasks : ['template']
+                tasks : ['template', 'htmlangular']
+            },
+            html: {
+                files : ['src/**/*.html'],
+                tasks : ['htmlangular']
+            },
+            config: {
+                files : [ '<%= jshint.config %>'],
+                tasks : ['jshint', 'template']
             }
         }
     });
@@ -242,18 +314,24 @@ module.exports = function (grunt) {
     grunt.registerTask('buildDev', [
         'clean',
         'jshint',
+        'htmlangular',
+        'copy:common',
         'html2js',
+        'ngconstant',
         'concat:common',
         'template'
     ]);
-    
+
     grunt.registerTask('buildProd', [
         'clean',
         'jshint',
-        'copy',
+        'copy:common',
+        'copy:prod',
         'template',
+        'htmlangular',
         'htmlmin:templates',
         'html2js',
+        'ngconstant',
         'cssmin',
         'concat',
         'ngAnnotate',
@@ -270,23 +348,26 @@ module.exports = function (grunt) {
     grunt.registerTask('build', 'Build', function () {
         grunt.log.subhead('Build in mode ' + mode);
         switch (mode) {
-        case 'dev':
-            grunt.task.run('buildDev');
-            break;
-        case 'prod':
-            grunt.task.run('buildProd');
-            break;
-        default:
-            grunt.verbose.or.write('Incorrect build mode [' + mode + ']').error();
-            grunt.fail.warn('Please retry with --mode=dev|prod');
+            case 'dev':
+                grunt.task.run('buildDev');
+                break;
+            case 'prod':
+                grunt.task.run('buildProd');
+                break;
+            default:
+                grunt.verbose.or.write('Incorrect build mode [' + mode + ']').error();
+                grunt.fail.warn('Please retry with --mode=dev|prod');
         }
     });
 
     grunt.registerTask('serve', 'Dev Build', function () {
-        mode = grunt.option('mode') || 'dev';
         grunt.task.run(['build', 'concurrent:target']);
     });
-    
+
+    grunt.registerTask('buildAndWatch', 'dev build and watch files', function () {
+        grunt.task.run(['build', 'watch']);
+    });
+
     grunt.registerTask('default', 'serve');
 
 };

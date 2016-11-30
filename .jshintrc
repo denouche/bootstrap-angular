@@ -3,6 +3,7 @@
     "camelcase" : false,
     "curly"     : true,
     "eqeqeq"    : true,
+    "esversion" : 6,
     "forin"     : true,
     "immed"     : true,
     "indent"    : 4,
@@ -27,7 +28,8 @@
     "smarttabs" : false,
     "predef"    : [
         "angular",
-        "_"
+        "_",
+        "moment"
     ]
 }
 

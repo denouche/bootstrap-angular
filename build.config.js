@@ -1,13 +1,16 @@
 'use strict';
 module.exports = {
     src: {
+        config: [
+            'src/config/config.js'
+        ],
         js: [
-            'src/config/**/*.js',
             'src/app/**/*-module.js',
             'src/app/**/*-service.js',
             'src/app/**/*-directive.js',
             'src/app/**/*-controller.js',
-            'src/app/app.js'
+            'src/app/**/*-constant.js',
+            'src/app/app.js',
         ],
         css: [
             'src/assets/css/*.css'
@@ -15,19 +18,23 @@ module.exports = {
     },
     common: {
         js: [
-            'bower_components/jquery/dist/jquery.min.js',
-            'bower_components/angular/angular.min.js',
-            'bower_components/angular-route/angular-route.min.js',
-            'bower_components/angular-translate/angular-translate.min.js',
-            'bower_components/angular-translate-loader-partial/angular-translate-loader-partial.min.js',
-            'bower_components/bootstrap/dist/js/bootstrap.min.js',
-            'bower_components/lodash/dist/lodash.min.js'
+            'node_modules/jquery/dist/jquery.min.js',
+            'node_modules/moment/min/moment.min.js',
+            'node_modules/lodash/lodash.min.js',
+            'node_modules/angular/angular.min.js',
+            'node_modules/angular-route/angular-route.min.js',
+            'node_modules/bootstrap/dist/js/bootstrap.min.js',
+            'node_modules/angular-translate/dist/angular-translate.min.js',
+            'node_modules/angular-translate/dist/angular-translate-loader-partial/angular-translate-loader-partial.min.js',
+            'node_modules/angular-dynamic-locale/dist/tmhDynamicLocale.min.js',
+            'node_modules/angular-sanitize/angular-sanitize.min.js'
         ],
         css: [
-            'bower_components/bootstrap/dist/css/bootstrap.min.css'
+            'node_modules/bootstrap/dist/css/bootstrap.min.css'
         ],
         assets: [
-            'bower_components/bootstrap/dist/fonts/glyphicons-*'
+            'node_modules/bootstrap/dist/fonts/glyphicons-*',
+            'node_modules/angular-i18n/angular-locale_fr-fr.js'
         ]
     }
 };
