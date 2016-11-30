@@ -24,8 +24,9 @@ install: npmInstall
 dev:
 	grunt
 
-release: clean install
-	grunt build --mode=prod
+release: 
+#clean install
+	#grunt build --mode=prod
 	npm run release
 	$(eval VERSION := package.json)
 	docker build -t $(PROJECT_NAME):$(VERSION) .

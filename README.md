@@ -11,7 +11,6 @@ make install
 ### Manually:
 ```bash
 npm install
-./node_modules/bower/bin/bower install
 ```
 
 ## Develop
@@ -50,22 +49,20 @@ make release type=patch|minor|major
 grunt clean
 rm -rf bower_components/ node_modules/ dist/
 npm install
-./node_modules/bower/bin/bower install
-if [ "$(type)" = "" ]; then grunt bump-only:patch; else grunt bump-only:$(type); fi          // patch|minor|major
 grunt build --mode=prod
-git add .                                              // add dist folder to commit it with the release
-grunt changelog
-grunt bump-commit
+npm run release
+docker build -t $(PROJECT_NAME):$(VERSION) .
 rm -rf dist/                                           // do not keep generated build on branch master
 git commit -am'chore: clean dist folder after release'
-git push origin master
+git push --follow-tags origin HEAD
 ```
 
 # Changelog
 ## How to
 
-When releasing, the commit are parsed, using angular conventions: https://github.com/ajoslin/conventional-changelog/blob/master/conventions/angular.md
+When releasing, the commit are parsed, using angular conventions: https://github.com/bcoe/conventional-changelog-standard/blob/master/convention.md
 
 The CHANGELOG.md file is filled in with the functionnal changelog based on the commits messages.
 
 So it's important to follow the conventions that are described in the above link.
+

@@ -5,7 +5,6 @@ src/index.html
 tmp/
 src/templates.js
 src/assets/libs/
-dist/
 npm-debug.log
 
 
