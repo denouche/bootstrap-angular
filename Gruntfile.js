@@ -61,8 +61,7 @@ module.exports = function (grunt) {
                 grunt.file.expand(
                     assets.src.js
                     .concat([
-                        grunt.config.process('<%= html2js.app.dest %>'),
-                        grunt.config.process('<%= ngconstant.version.options.dest %>')
+                        grunt.config.process('<%= html2js.app.dest %>')
                     ])
                 )
                 .forEach(function(e) {
@@ -92,7 +91,6 @@ module.exports = function (grunt) {
 
 
     grunt.initConfig({
-        pkg: grunt.file.readJSON('package.json'),
         clean : {
             files : [
                 'src/index.html', 'tmp/', 'dist/'
@@ -106,7 +104,6 @@ module.exports = function (grunt) {
             app: {
                 src: assets.src.js.concat([
                     '<%= html2js.app.dest %>',
-                    '<%= ngconstant.version.options.dest %>',
                     assets.src.config
                 ]),
                 dest: 'tmp/js/App.js'
@@ -168,9 +165,7 @@ module.exports = function (grunt) {
         },
         filerev: {
             dist: {
-                files: {
-                    src: ['dist/js/{,*/}*.js', 'dist/assets/css/{,*/}*.css']
-                }
+                src: ['dist/js/{,*/}*.js', 'dist/assets/css/{,*/}*.css']
             }
         },
         html2js: {
@@ -246,17 +241,6 @@ module.exports = function (grunt) {
                 }
             }
         },
-        ngconstant: {
-            version: {
-                options: {
-                    dest: 'tmp/js/version.js',
-                    name: 'configVersion'
-                },
-                constants: {
-                    VERSION: '<%= pkg.version %>'
-                }
-            }
-        },
         template: {
             index: {
                 src: 'src/index.ejs',
@@ -299,7 +283,6 @@ module.exports = function (grunt) {
         'htmlangular',
         'copy:common',
         'html2js',
-        'ngconstant',
         'concat:common',
         'template'
     ]);
@@ -313,7 +296,6 @@ module.exports = function (grunt) {
         'htmlangular',
         'htmlmin:templates',
         'html2js',
-        'ngconstant',
         'cssmin',
         'concat',
         'ngAnnotate',

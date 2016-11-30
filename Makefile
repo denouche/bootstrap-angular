@@ -22,10 +22,11 @@ install: npmInstall
 dev:
 	grunt
 
-release: clean install bumpAndBuildProd cleanAfterRelease
-	npm release
+release: clean install
+	grunt build --mode=prod
+	npm run release
 	rm -rf $(DIST_FOLDER)/
-	#git commit -am'chore: clean $(DIST_FOLDER) folder after release'
+	git commit -am'chore: clean $(DIST_FOLDER) folder after release'
 	#git push --follow-tags origin HEAD
 
 watch:
