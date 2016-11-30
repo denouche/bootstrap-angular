@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.2.2"></a>
+## [0.2.2](https://github.com/denouche/bootstrap-angular/compare/v0.2.1...v0.2.2) (2016-11-30)
+
+
+### Bug Fixes
+
+* add npm start target ([d9f9321](https://github.com/denouche/bootstrap-angular/commit/d9f9321))
+
+
+
 <a name="0.2.1"></a>
 ## [0.2.1](https://github.com/denouche/bootstrap-angular/compare/v0.2.0...v0.2.1) (2016-11-30)
 
