@@ -2,7 +2,6 @@ SHELL := /bin/bash
 
 DIST_FOLDER=dist
 PROJECT_NAME=$(shell cat package.json | grep -Po '"name"\s*:\s*"\K([^"]+)')
-PROJECT_NAME=$(shell cat package.json | grep -Po '"version"\s*:\s*"\K([^"]+)')
 
 help:
 	@echo "Existing goals are: "
@@ -24,15 +23,14 @@ install: npmInstall
 dev:
 	grunt
 
-release: 
-#clean install
-	#grunt build --mode=prod
+release: clean install
+	grunt build --mode=prod
 	npm run release
-	$(eval VERSION := package.json)
+	$(eval VERSION := $(shell cat package.json | grep -Po '"version"\s*:\s*"\K([^"]+)'))
 	docker build -t $(PROJECT_NAME):$(VERSION) .
 	rm -rf $(DIST_FOLDER)/
 	git commit -am'chore: clean $(DIST_FOLDER) folder after release'
-	#git push --follow-tags origin HEAD
+	git push --follow-tags origin HEAD
 
 watch:
 	grunt buildAndWatch
