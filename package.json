@@ -38,6 +38,6 @@
   },
   "scripts": {
     "release": "git add dist && standard-version --commit-all",
-    "run": "grunt"
+    "start": "grunt"
   }
 }
