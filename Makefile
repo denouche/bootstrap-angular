@@ -15,10 +15,8 @@ clean:
 	grunt clean || true
 	rm -rf node_modules/ $(DIST_FOLDER)/
 
-npmInstall:
+install:
 	npm install
-
-install: npmInstall
 
 dev:
 	grunt

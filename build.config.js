@@ -18,16 +18,16 @@ module.exports = {
     },
     common: {
         js: [
-            'node_modules/jquery/dist/jquery.min.js',
             'node_modules/moment/min/moment.min.js',
             'node_modules/lodash/lodash.min.js',
             'node_modules/angular/angular.min.js',
             'node_modules/angular-route/angular-route.min.js',
-            'node_modules/bootstrap/dist/js/bootstrap.min.js',
             'node_modules/angular-translate/dist/angular-translate.min.js',
             'node_modules/angular-translate/dist/angular-translate-loader-partial/angular-translate-loader-partial.min.js',
             'node_modules/angular-dynamic-locale/dist/tmhDynamicLocale.min.js',
-            'node_modules/angular-sanitize/angular-sanitize.min.js'
+            'node_modules/angular-sanitize/angular-sanitize.min.js',
+            'node_modules/angular-animate/angular-animate.min.js',
+            'node_modules/angular-touch/angular-touch.min.js'
         ],
         css: [
             'node_modules/bootstrap/dist/css/bootstrap.min.css'
