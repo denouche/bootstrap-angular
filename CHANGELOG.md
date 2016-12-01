@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.0.0"></a>
+# [1.0.0](https://github.com/denouche/bootstrap-angular/compare/v0.2.2...v1.0.0) (2016-12-01)
+
+
+### Features
+
+* add angular-ui-bootstrap ([89deb52](https://github.com/denouche/bootstrap-angular/commit/89deb52))
+* remove jquery, add angular animate and angular touch for angular ui bootstrap ([89baa5c](https://github.com/denouche/bootstrap-angular/commit/89baa5c))
+
+
+### BREAKING CHANGES
+
+* remove jquery, since angular ui bootstrap does not require it
+
+
+
 <a name="0.2.2"></a>
 ## [0.2.2](https://github.com/denouche/bootstrap-angular/compare/v0.2.1...v0.2.2) (2016-11-30)
 
