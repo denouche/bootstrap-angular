@@ -27,7 +27,8 @@ module.exports = {
             'node_modules/angular-dynamic-locale/dist/tmhDynamicLocale.min.js',
             'node_modules/angular-sanitize/angular-sanitize.min.js',
             'node_modules/angular-animate/angular-animate.min.js',
-            'node_modules/angular-touch/angular-touch.min.js'
+            'node_modules/angular-touch/angular-touch.min.js',
+            'node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js'
         ],
         css: [
             'node_modules/bootstrap/dist/css/bootstrap.min.css'
