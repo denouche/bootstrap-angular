@@ -7,10 +7,10 @@
     "angular-dynamic-locale": "~0.1.32",
     "angular-i18n": "~1.5.9",
     "angular-route": "~1.5.9",
-    "angular-sanitize": "~1.5.9",
+    "angular-sanitize": "^1.5.9",
     "angular-touch": "~1.5.9",
     "angular-translate": "~2.13.0",
-    "angular-ui-bootstrap": "~2.3.0",
+    "angular-ui-bootstrap": "^2.3.0",
     "bootstrap": "^3.3.6",
     "lodash": "^4.15.0",
     "moment": "^2.13.0"

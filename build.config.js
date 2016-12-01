@@ -31,7 +31,8 @@ module.exports = {
             'node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js'
         ],
         css: [
-            'node_modules/bootstrap/dist/css/bootstrap.min.css'
+            'node_modules/bootstrap/dist/css/bootstrap.min.css',
+            'node_modules/angular-ui-bootstrap/dist/ui-bootstrap-csp.css'
         ],
         assets: [
             'node_modules/bootstrap/dist/fonts/glyphicons-*',

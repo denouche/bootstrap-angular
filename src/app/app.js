@@ -1,9 +1,11 @@
 angular.module('myProjectApplication', [
-    'config',
     'pascalprecht.translate',
     'tmh.dynamicLocale',
     'ngRoute',
     'ngSanitize',
+    'ngTouch',
+    'ui.bootstrap',
+    'config',
     'templates-app',
     'hello'
 ])
