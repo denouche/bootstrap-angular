@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.0.1"></a>
+## [1.0.1](https://github.com/denouche/bootstrap-angular/compare/v1.0.0...v1.0.1) (2016-12-01)
+
+
+### Bug Fixes
+
+* add missing modules and dependencies files ([c4f4720](https://github.com/denouche/bootstrap-angular/commit/c4f4720))
+
+
+
 <a name="1.0.0"></a>
 # [1.0.0](https://github.com/denouche/bootstrap-angular/compare/v0.2.2...v1.0.0) (2016-12-01)
 

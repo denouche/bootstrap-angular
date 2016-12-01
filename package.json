@@ -1,6 +1,6 @@
 {
   "name": "bootstrap-angular",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "dependencies": {
     "angular": "~1.5.9",
     "angular-animate": "~1.5.9",
