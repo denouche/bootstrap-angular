@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.0.2"></a>
+## [1.0.2](https://github.com/denouche/bootstrap-angular/compare/v1.0.1...v1.0.2) (2016-12-02)
+
+
+### Bug Fixes
+
+* add assets font folder ([cfb3c8f](https://github.com/denouche/bootstrap-angular/commit/cfb3c8f))
+
+
+
 <a name="1.0.1"></a>
 ## [1.0.1](https://github.com/denouche/bootstrap-angular/compare/v1.0.0...v1.0.1) (2016-12-01)
 
