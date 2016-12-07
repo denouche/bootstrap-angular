@@ -25,8 +25,11 @@ angular.module('myProjectApplication', [
     });
 
     $translateProvider
-        .preferredLanguage(Configuration.defaultlanguage)
-        .fallbackLanguage('fr-fr');
+        .registerAvailableLanguageKeys(['fr-fr'], {
+             'fr*': 'fr-fr'
+         })
+        .determinePreferredLanguage()
+        .fallbackLanguage(Configuration.defaultlanguage);
     
     $translateProvider.useSanitizeValueStrategy('escape');
 })
