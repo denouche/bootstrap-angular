@@ -15,7 +15,7 @@ clean:
 	grunt clean || true
 	rm -rf node_modules/ $(DIST_FOLDER)/
 
-install:
+getdeps:
 	npm install
 
 dev:
@@ -25,13 +25,9 @@ buildProdAndChangelogAndTag:
 	grunt build --mode=prod
 	npm run release
 
-release: clean install buildProdAndChangelogAndTag
-	$(eval VERSION := $(shell cat package.json | grep -Po '"version"\s*:\s*"\K([^"]+)'))
-	docker build -t $(PROJECT_NAME):$(VERSION) .
-	rm -rf $(DIST_FOLDER)/
-	git commit -am'chore: clean $(DIST_FOLDER) folder after release'
-	git push --follow-tags origin HEAD
+release: clean getdeps
+	npm run release
 
-watch:
-	grunt buildAndWatch
+start:
+	grunt serve
 

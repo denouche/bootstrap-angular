@@ -12,7 +12,7 @@ angular.module('myProjectApplication', [
 .config(function($routeProvider) {
     'use strict';
 
-    $routeProvider.otherwise({redirectTo:'/hello'});
+    $routeProvider.otherwise({redirectTo:'hello'});
 
 })
 .config(function ($translateProvider, Configuration, $translatePartialLoaderProvider) {
@@ -26,7 +26,7 @@ angular.module('myProjectApplication', [
 
     $translateProvider
         .registerAvailableLanguageKeys(['fr-fr'], {
-             'fr*': 'fr-fr'
+             '*': 'fr-fr'
          })
         .determinePreferredLanguage()
         .fallbackLanguage(Configuration.defaultlanguage);
@@ -44,5 +44,4 @@ angular.module('myProjectApplication', [
     $rootScope.$on('$translatePartialLoaderStructureChanged', function () {
         $translate.refresh();
     });
-
 });

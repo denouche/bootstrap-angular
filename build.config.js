@@ -18,7 +18,7 @@ module.exports = {
     },
     common: {
         js: [
-            'node_modules/moment/min/moment.min.js',
+            'node_modules/moment/min/moment-with-locales.min.js',
             'node_modules/lodash/lodash.min.js',
             'node_modules/angular/angular.min.js',
             'node_modules/angular-route/angular-route.min.js',

@@ -2,18 +2,19 @@
   "name": "bootstrap-angular",
   "version": "1.0.2",
   "dependencies": {
-    "angular": "~1.5.9",
-    "angular-animate": "~1.5.9",
+    "angular": "~1.6.3",
+    "angular-animate": "~1.6.3",
     "angular-dynamic-locale": "~0.1.32",
-    "angular-i18n": "~1.5.9",
-    "angular-route": "~1.5.9",
-    "angular-sanitize": "^1.5.9",
-    "angular-touch": "~1.5.9",
-    "angular-translate": "~2.13.0",
-    "angular-ui-bootstrap": "^2.3.0",
-    "bootstrap": "^3.3.6",
+    "angular-i18n": "~1.6.3",
+    "angular-route": "~1.6.3",
+    "angular-sanitize": "^1.6.3",
+    "angular-touch": "~1.6.3",
+    "angular-translate": "~2.15.1",
+    "angular-translate-loader-partial": "^2.15.1",
+    "angular-ui-bootstrap": "^2.5.6",
+    "bootstrap": "^3.3.7",
     "lodash": "^4.15.0",
-    "moment": "^2.13.0"
+    "moment": "^2.19.1"
   },
   "devDependencies": {
     "ejs": "^2.5.3",
@@ -36,10 +37,10 @@
     "grunt-text-replace": "^0.4.0",
     "grunt-usemin": "^3.1.1",
     "load-grunt-tasks": "^3.1.0",
-    "standard-version": "^3.0.0"
+    "standard-version": "^4.0.0"
   },
   "scripts": {
-    "release": "git add dist && standard-version --commit-all",
+    "release": "standard-version && grunt build --mode=prod",
     "start": "grunt"
   }
 }
